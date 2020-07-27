@@ -1,0 +1,31 @@
+.title {
+    color: #5156b5;
+    font-family: sans-serif;
+    font-weight: 800;
+    text-align: center;
+}
+
+.form {
+    text-align: center;
+    border: 1px solid black;
+    width: 200px;
+    margin: 0 auto 10px;
+}
+
+.input_name {
+    margin: 10px;
+}
+
+.input_number {
+    margin: 10px;
+}
+
+.submit_btn {
+    min-width: 140px;
+    border-radius: 4px;
+    outline: none;
+    margin-bottom: 10px;
+    background-color: #5156b5;
+    color: white;
+
+}

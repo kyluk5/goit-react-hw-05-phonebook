@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { v4 as uuidv4 } from "uuid";
 import PfoneForm from "../PhoneForm/PhoneForm";
 import FindContact from "../FindContact/FindContact";
+import { CSSTransition } from "react-transition-group";
+import "./App.css";
 
 class App extends Component {
   state = {
@@ -9,6 +11,7 @@ class App extends Component {
     filter: "",
     name: "",
     number: "",
+    value: false,
   };
 
   contactName = (e) => {
@@ -43,9 +46,9 @@ class App extends Component {
 
   submitForm = (e) => {
     e.preventDefault();
-    const { name, number, contacts } = this.state;
+    const { name, number, contacts, value } = this.state;
     if (contacts.find((item) => item.name === this.state.name)) {
-      alert(`${name} alredy exist`);
+      this.toggle(value);
       return;
     }
     const object = {
@@ -76,16 +79,39 @@ class App extends Component {
     }
   }
 
+  toggle = (status) => {
+    this.setState({
+      value: !status,
+    });
+  };
+
   render() {
     const filtered = this.getFilteredContacts();
+    const { name, number, value } = this.state;
+    const test = () => {
+      this.toggle(true);
+    };
 
     return (
       <>
+        <CSSTransition
+          in={value}
+          classNames="alert"
+          timeout={500}
+          mountOnEnter
+          unmountOnExit
+        >
+          <button
+            className="alert"
+            onClick={test}
+          >{`${name} alredy exist`}</button>
+        </CSSTransition>
+
         <PfoneForm
           submitForm={this.submitForm}
-          name={this.state.name}
+          name={name}
           contactName={this.contactName}
-          number={this.state.number}
+          number={number}
           contactNumber={this.contactNumber}
         />
         <FindContact

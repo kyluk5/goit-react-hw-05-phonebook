@@ -1,34 +1,37 @@
 import React from "react";
 import PropTypes from "prop-types";
-import style from "../FindContact/FindContact.module.css";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
+import "../FindContact/FindContact.css";
 
 const FindContact = ({ filtered, filterValue, deleteContact }) => {
   return (
     <>
       {filtered.length > 1 && (
-        <div className={style["search-container"]}>
+        <div className="search-container">
           {/* <h3>Contacts</h3> */}
           <span>Find contacts by name</span>
           <br></br>
           <input type="text" onChange={filterValue}></input>
         </div>
       )}
-      <div className={style["search_info"]}>
-        <ul className={style["contact_list"]}>
+      <div className="search_info">
+        <TransitionGroup component="ul" className="contact_list">
           {filtered.map((item) => (
-            <li className={style["contact_item"]} key={item.id}>
-              {item.name} : {item.number}
-              <button
-                className={style["delete_btn"]}
-                type="button"
-                id={item.id}
-                onClick={deleteContact}
-              >
-                delete
-              </button>
-            </li>
+            <CSSTransition key={item.id} classNames="list__item" timeout={800}>
+              <li className="contact_item" key={item.id}>
+                {item.name} : {item.number}
+                <button
+                  className="delete_btn"
+                  type="button"
+                  id={item.id}
+                  onClick={deleteContact}
+                >
+                  Delete
+                </button>
+              </li>
+            </CSSTransition>
           ))}
-        </ul>
+        </TransitionGroup>
       </div>
     </>
   );
